@@ -12,6 +12,8 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet var gameView: SKView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,14 +31,19 @@ class GameViewController: UIViewController {
                 // Set the scale mode to scale to fit the window
                 sceneNode.scaleMode = .aspectFill
                 
+                sceneNode.backgroundColor = UIColor.clear
+                
                 // Present the scene
-                if let view = self.view as! SKView? {
+                if let view = self.gameView {
                     view.presentScene(sceneNode)
                     
                     view.ignoresSiblingOrder = true
                     
                     view.showsFPS = true
                     view.showsNodeCount = true
+                    
+                    view.allowsTransparency = true
+                    view.backgroundColor = UIColor.clear
                 }
             }
         }
