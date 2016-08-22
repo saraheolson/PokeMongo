@@ -526,6 +526,7 @@
 				21DB8AFA1D6A8C910004CFD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21DB8AFB1D6A8C910004CFD2 /* Build configuration list for PBXNativeTarget "PokeMongoTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +535,7 @@
 				21DB8AFD1D6A8C910004CFD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		21DB8AFE1D6A8C910004CFD2 /* Build configuration list for PBXNativeTarget "PokeMongoUITests" */ = {
 			isa = XCConfigurationList;
@@ -542,6 +544,7 @@
 				21DB8B001D6A8C910004CFD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
