@@ -33,6 +33,8 @@ class GameViewController: UIViewController {
                 
                 sceneNode.backgroundColor = UIColor.clear
                 
+                sceneNode.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+                
                 // Present the scene
                 if let view = self.gameView {
                     view.presentScene(sceneNode)
