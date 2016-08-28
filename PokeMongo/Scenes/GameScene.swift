@@ -74,14 +74,14 @@ class GameScene: SKScene {
         startTouchLocation = touches.first!.location(in: self)
         
         // Create a spinner to track the user's touch movements
-        updateSpinner(atLocation: startTouchLocation)
+        updateSpinner(atLocation: startTouchLocation, withColor: SKColor.white)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         // Update the spinner as the touch moves
         let currentTouchLocation = touches.first!.location(in: self)
-        updateSpinner(atLocation: currentTouchLocation)
+        updateSpinner(atLocation: currentTouchLocation, withColor: SKColor.green)
         
         // Move the ball along with the user's gesture
         if let ball = ball {
@@ -95,7 +95,7 @@ class GameScene: SKScene {
         endTouchLocation = touches.first!.location(in: self)
         
         // Update the spinner
-        updateSpinner(atLocation: endTouchLocation)
+        updateSpinner(atLocation: endTouchLocation, withColor: SKColor.blue)
 
         // Continue the ball's movement along the same path as the touch gesture
         let factor: CGFloat = 50
@@ -107,15 +107,15 @@ class GameScene: SKScene {
         
         // Update the spinner when the touch is cancelled
         let currentTouchLocation = touches.first!.location(in: self)
-        updateSpinner(atLocation: currentTouchLocation)
+        updateSpinner(atLocation: currentTouchLocation, withColor: SKColor.red)
     }
     
-    func updateSpinner(atLocation location: CGPoint) {
+    func updateSpinner(atLocation location: CGPoint, withColor color: SKColor) {
         
         // Creates a spinner to display the user's touch gesture
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
             n.position = location
-            n.strokeColor = SKColor.white
+            n.strokeColor = color
             self.addChild(n)
         }
     }
