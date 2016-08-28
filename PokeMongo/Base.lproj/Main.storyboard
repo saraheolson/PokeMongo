@@ -18,11 +18,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="qNh-WU-DGI"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="qNh-WU-DGI">
+                                <color key="backgroundColor" red="0.063562118133616341" green="1" blue="0.0056034063309268189" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul2-ob-gKa">
+                                <color key="backgroundColor" red="0.17931729668835539" green="1" blue="0.013718976963649987" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
-                                <state key="normal" title="PLAY">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="contentEdgeInsets" minX="15" minY="10" maxX="15" maxY="10"/>
+                                <state key="normal" title="Play Game">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="BV1-FR-VrT" kind="show" id="yuQ-Cz-XK3"/>
@@ -34,7 +40,7 @@
                             <constraint firstItem="x55-Be-LsX" firstAttribute="top" secondItem="qNh-WU-DGI" secondAttribute="bottom" id="44u-9D-9kj"/>
                             <constraint firstItem="qNh-WU-DGI" firstAttribute="leading" secondItem="8ml-VJ-itq" secondAttribute="leading" id="6cK-gq-ezs"/>
                             <constraint firstAttribute="trailing" secondItem="qNh-WU-DGI" secondAttribute="trailing" id="Nie-Va-Wgy"/>
-                            <constraint firstItem="x55-Be-LsX" firstAttribute="top" secondItem="ul2-ob-gKa" secondAttribute="bottom" constant="50" id="UxX-NA-quX"/>
+                            <constraint firstItem="x55-Be-LsX" firstAttribute="top" secondItem="ul2-ob-gKa" secondAttribute="bottom" constant="30" id="UxX-NA-quX"/>
                             <constraint firstItem="ul2-ob-gKa" firstAttribute="centerX" secondItem="qNh-WU-DGI" secondAttribute="centerX" id="aAk-n1-FLx"/>
                             <constraint firstItem="qNh-WU-DGI" firstAttribute="top" secondItem="vdx-Dt-7vZ" secondAttribute="bottom" id="vbc-fU-tAT"/>
                         </constraints>
@@ -43,7 +49,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ds-h7-7Bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="713" y="116"/>
+            <point key="canvasLocation" x="712.79999999999995" y="115.59220389805098"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
