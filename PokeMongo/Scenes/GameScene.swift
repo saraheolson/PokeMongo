@@ -13,7 +13,8 @@ class GameScene: SKScene {
     
     // Define nodes used in the game
     var ball: SKSpriteNode?
-
+    var monster: SKSpriteNode?
+    
     // Label for displaying contextual information to the user
     var titleLabel : SKLabelNode?
 
@@ -30,6 +31,10 @@ class GameScene: SKScene {
         // Add a ball to the scene
         if ball == nil {
             createBall()
+        }
+        
+        if monster == nil {
+            createMonster()
         }
     }
     
@@ -135,5 +140,20 @@ class GameScene: SKScene {
         
         // Create a new ball and add to the scene
         createBall()
+    }
+    
+    // MARK: - Monster functions
+    
+    func createMonster() {
+        
+        monster = SKSpriteNode(imageNamed: "PurpleMonster1")
+        
+        if let monster = self.monster {
+            
+            monster.position = CGPoint(x: 0, y: frame.height/2)
+            monster.zPosition = 2
+            
+            addChild(monster)
+        }
     }
 }
