@@ -112,7 +112,7 @@ class GameScene: SKScene {
             // Add to the scene
             addChild(ball)
             
-            // Display a spark particle when the monster is hit
+            // Display a spark particle when the ball is placed in the scene
             let spark:SKEmitterNode = SKEmitterNode(fileNamed: "MagicParticle")!
             spark.position = ball.position
             self.addChild(spark)
