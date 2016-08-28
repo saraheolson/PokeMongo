@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="11E-LW-dVF">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="TVY-xU-7fD">
+            <objects>
+                <viewController id="1mF-0T-SMZ" customClass="MainViewController" customModule="PokeMongo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vdx-Dt-7vZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="x55-Be-LsX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8ml-VJ-itq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash" translatesAutoresizingMaskIntoConstraints="NO" id="qNh-WU-DGI"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ul2-ob-gKa">
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="yuQ-Cz-XK3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="x55-Be-LsX" firstAttribute="top" secondItem="qNh-WU-DGI" secondAttribute="bottom" id="44u-9D-9kj"/>
+                            <constraint firstItem="qNh-WU-DGI" firstAttribute="leading" secondItem="8ml-VJ-itq" secondAttribute="leading" id="6cK-gq-ezs"/>
+                            <constraint firstAttribute="trailing" secondItem="qNh-WU-DGI" secondAttribute="trailing" id="Nie-Va-Wgy"/>
+                            <constraint firstItem="x55-Be-LsX" firstAttribute="top" secondItem="ul2-ob-gKa" secondAttribute="bottom" constant="50" id="UxX-NA-quX"/>
+                            <constraint firstItem="ul2-ob-gKa" firstAttribute="centerX" secondItem="qNh-WU-DGI" secondAttribute="centerX" id="aAk-n1-FLx"/>
+                            <constraint firstItem="qNh-WU-DGI" firstAttribute="top" secondItem="vdx-Dt-7vZ" secondAttribute="bottom" id="vbc-fU-tAT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="8En-qp-JqY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8ds-h7-7Bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="713" y="116"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -35,16 +74,36 @@
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="0eK-Hh-PiI" secondAttribute="bottom" id="sy5-XN-Ngc"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="55c-wg-LKl"/>
                     <connections>
                         <outlet property="gameView" destination="0eK-Hh-PiI" id="BIo-Hp-Xos"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="118.29085457271366"/>
+            <point key="canvasLocation" x="1513" y="117"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gfz-Zs-Yqm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="11E-LW-dVF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3bk-wn-Ym0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="1mF-0T-SMZ" kind="relationship" relationship="rootViewController" id="Ql7-sG-iBc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pqu-EG-7ex" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-137" y="117"/>
         </scene>
     </scenes>
     <resources>
         <image name="Background" width="640" height="1136"/>
+        <image name="Splash" width="640" height="1136"/>
     </resources>
 </document>
