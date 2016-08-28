@@ -185,7 +185,6 @@ class GameScene: SKScene {
         }
     }
     
-    
     func moveMonster() {
         
         if let monster = self.monster {
@@ -210,6 +209,11 @@ extension GameScene: SKPhysicsContactDelegate {
             monster.removeFromParent()
             self.monster = nil
 
+            let spark: SKEmitterNode = SKEmitterNode(fileNamed: "SparkParticle")!
+            spark.position = monster.position
+            spark.particleColor = UIColor.purple
+            addChild(spark)
+            
             self.resetBall()
 
             let delayTime = DispatchTime.now() + 1.0
