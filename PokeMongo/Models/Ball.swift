@@ -25,10 +25,4 @@ class Ball {
             ball.physicsBody?.allowsRotation = false
         }
     }
-    
-    func updatePosition(toPoint point: CGPoint) {
-        if let ball = node {
-            ball.position = point
-        }
-    }
 }

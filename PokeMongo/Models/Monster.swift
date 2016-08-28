@@ -17,45 +17,63 @@ class Monster {
     var node: SKSpriteNode?
     let minY: UInt32 = 100
     let minX: UInt32 = 0
-    let maxY: UInt32
-    let maxX: UInt32
+    let maxY: CGFloat
+    let maxX: CGFloat
     
+    var monsterPositions: [CGPoint]
+
     init(name: String,
          hitColor: UIColor,
-         maxX: UInt32,
-         maxY: UInt32) {
+         maxX: CGFloat,
+         maxY: CGFloat) {
         
         self.name = name
         self.hitColor = hitColor
         self.maxX = maxX
         self.maxY = maxY
+        
+        monsterPositions = [CGPoint(x: maxX, y: maxY-(maxY/3)),
+                            CGPoint(x: -maxX, y: maxY/2),
+                            CGPoint(x: maxX/2, y: maxY),
+                            CGPoint(x: -maxX, y: maxY/4),
+                            CGPoint(x: maxX/3, y: maxY-(maxY/4))]
     }
     
     func configureMonster() {
         
+        // Get the images for the monster
         let textureAtlas = SKTextureAtlas(named:"\(name).atlas")
         
         // Programmatically add sprite animation
         spriteArray = [textureAtlas.textureNamed("\(name)1"),
                        textureAtlas.textureNamed("\(name)2")]
         
+        // Create the node
         node = SKSpriteNode(texture:spriteArray[0]);
         
         if let node = node {
-            node.position = randomizePosition(fromPoint: CGPoint(x: 0, y: 800))
+            
+            // Set the node position
+            node.position = randomPosition()
             node.zPosition = 2
+            
+            // Add physics
             node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.frame.size)
             node.physicsBody?.isDynamic = true
             node.physicsBody?.affectedByGravity = false
             node.physicsBody?.allowsRotation = false
+            
+            // Define which objects collide or contact
             node.physicsBody?.categoryBitMask = monsterMask
             node.physicsBody?.collisionBitMask = ballMask
             node.physicsBody?.contactTestBitMask = ballMask
             
+            // Set the size of the node to a random value
             let scale = randomScale()
             node.xScale = scale;
             node.yScale = scale;
             
+            // Start the animations
             startMovement()
         }
     }
@@ -63,6 +81,8 @@ class Monster {
     // MARK: - Actions
     
     func directHit() {
+        
+        // When the monster is hit, remove from view and stop all actions
         if let node = node {
             node.removeAllActions()
             node.removeFromParent()
@@ -72,15 +92,20 @@ class Monster {
     func startMovement() {
         
         if let node = node {
+            
+            // Create a series of random actions to move monster around screen
             let moveSequence = SKAction.sequence([
-                randomMoveAction(nearPoint: CGPoint(x: 200, y: 850)),
-                randomMoveAction(nearPoint: CGPoint(x: -200, y: 600)),
-                randomMoveAction(nearPoint: CGPoint(x: -50, y: 1200)),
-                randomMoveAction(nearPoint: CGPoint(x: 100, y: 700)),
-                randomMoveAction(nearPoint: CGPoint(x: 250, y: 200))])
+                randomMoveAction(),
+                randomMoveAction(),
+                randomMoveAction(),
+                randomMoveAction(),
+                randomMoveAction()])
+            
+            // Repeat these movements until the monster is destroyed
             let repeatMoves = SKAction.repeatForever(moveSequence)
             node.run(repeatMoves)
             
+            // Animate the monster using the sprite atlas images
             let animateAction = SKAction.animate(with: spriteArray, timePerFrame: 0.20);
             let repeatAnimation = SKAction.repeatForever(animateAction)
             node.run(repeatAnimation)
@@ -93,8 +118,14 @@ class Monster {
     
     // MARK: - Random functions
     
-    func randomMoveAction(nearPoint point: CGPoint) -> SKAction {
-        return SKAction.move(to: randomizePosition(fromPoint: point), duration: 1.0)
+    func randomMoveAction() -> SKAction {
+        return SKAction.move(to: randomPosition(), duration: 1.0)
+    }
+    
+    func randomPosition() -> CGPoint {
+        let randomIndex = Int(arc4random_uniform(UInt32(monsterPositions.count)))
+        let point = monsterPositions[randomIndex]
+        return point
     }
     
     func randomScale() -> CGFloat {
@@ -104,34 +135,10 @@ class Monster {
         print("scale: \(scale)")
         return scale
     }
-
-    func randomizePosition(fromPoint point: CGPoint) -> CGPoint {
-        
-        let randomX = randomCGFloat(starting: CGFloat(point.x), ending: CGFloat(point.x + 50))
-        let randomY = randomCGFloat(starting: CGFloat(point.y), ending: CGFloat(point.y + 50))
-        
-        print("randomPoint: \(randomX),\(randomY)")
-        return CGPoint(x: CGFloat(randomX), y: CGFloat(randomY))
-    }
-    
-    func randomCGFloat(starting: CGFloat, ending: CGFloat ) -> CGFloat
-    {
-        var offset: CGFloat = 0
-        
-        if starting < 0   // allow negative ranges
-        {
-            offset = fabs(starting)
-        }
-        
-        let min = UInt32(starting + offset)
-        let max = UInt32(ending  + offset)
-        
-        return CGFloat(min + arc4random_uniform(max - min)) - offset
-    }
     
     // MARK: - Static factory functions
     
-    static func allMonsters(_ screenHeight: UInt32, screenWidth: UInt32) -> [Monster] {
+    static func allMonsters(_ screenHeight: CGFloat, screenWidth: CGFloat) -> [Monster] {
         
         let blueMonster = Monster(name: "BlueMonster",
                                   hitColor: UIColor.blue,
