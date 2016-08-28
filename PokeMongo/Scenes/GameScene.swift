@@ -155,10 +155,25 @@ class GameScene: SKScene {
             
             monster.physicsBody = SKPhysicsBody(texture: monster.texture!, size: monster.frame.size)
             monster.physicsBody?.isDynamic = true
-            monster.physicsBody?.affectedByGravity = true
+            monster.physicsBody?.affectedByGravity = false
             monster.physicsBody?.allowsRotation = false
             
+            moveMonster()
+            
             addChild(monster)
+        }
+    }
+    
+    func moveMonster() {
+        
+        if let monster = self.monster {
+            
+            let moveRight = SKAction.move(to: CGPoint(x: self.size.width/2, y: self.size.height/2), duration: 1.0)
+            let moveLeft = SKAction.move(to: CGPoint(x: -(self.size.width/2), y: self.size.height/2), duration: 1.0)
+            let moveSequence = SKAction.sequence([moveLeft, moveRight])
+            
+            let repeatMovesForever = SKAction.repeatForever(moveSequence)
+            monster.run(repeatMovesForever)
         }
     }
 }
