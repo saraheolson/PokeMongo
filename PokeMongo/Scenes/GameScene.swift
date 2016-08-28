@@ -202,8 +202,16 @@ extension GameScene: SKPhysicsContactDelegate {
             monster.removeAllActions()
             monster.removeFromParent()
             self.monster = nil
-            
-            resetBall()
+
+            self.resetBall()
+
+            let delayTime = DispatchTime.now() + 1.0
+            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+             
+                if self.monster == nil {
+                    self.createMonster()
+                }
+            }
         }
     }
 }
