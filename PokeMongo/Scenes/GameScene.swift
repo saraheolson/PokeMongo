@@ -9,6 +9,10 @@
 import SpriteKit
 import GameplayKit
 
+// Define our bitmask categories
+let ballMask: UInt32 = 0x1 << 0 //1
+let monsterMask: UInt32 = 0x1 << 1 //2
+
 class GameScene: SKScene {
     
     // Define nodes used in the game
@@ -28,6 +32,8 @@ class GameScene: SKScene {
         self.titleLabel = self.childNode(withName: "//helloLabel") as? SKLabelNode
         titleLabel?.isHidden = true
 
+        self.physicsWorld.contactDelegate = self
+        
         // Add a ball to the scene
         if ball == nil {
             createBall()
@@ -114,6 +120,11 @@ class GameScene: SKScene {
             ball.position = CGPoint(x: 0, y: 100)
             ball.scale(to: CGSize(width: 50, height: 50))
         
+            // Define contacts and collisions
+            ball.physicsBody?.categoryBitMask = ballMask
+            ball.physicsBody?.collisionBitMask = monsterMask
+            ball.physicsBody?.contactTestBitMask = monsterMask
+            
             // Add to the scene
             addChild(ball)
             
@@ -158,6 +169,10 @@ class GameScene: SKScene {
             monster.physicsBody?.affectedByGravity = false
             monster.physicsBody?.allowsRotation = false
             
+            monster.physicsBody?.categoryBitMask = monsterMask
+            monster.physicsBody?.collisionBitMask = ballMask
+            monster.physicsBody?.contactTestBitMask = ballMask
+            
             moveMonster()
             
             addChild(monster)
@@ -174,6 +189,21 @@ class GameScene: SKScene {
             
             let repeatMovesForever = SKAction.repeatForever(moveSequence)
             monster.run(repeatMovesForever)
+        }
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        if let monster = self.monster {
+            
+            monster.removeAllActions()
+            monster.removeFromParent()
+            self.monster = nil
+            
+            resetBall()
         }
     }
 }
