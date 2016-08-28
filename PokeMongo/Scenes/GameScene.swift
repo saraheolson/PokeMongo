@@ -153,6 +153,11 @@ class GameScene: SKScene {
             monster.position = CGPoint(x: 0, y: frame.height/2)
             monster.zPosition = 2
             
+            monster.physicsBody = SKPhysicsBody(texture: monster.texture!, size: monster.frame.size)
+            monster.physicsBody?.isDynamic = true
+            monster.physicsBody?.affectedByGravity = true
+            monster.physicsBody?.allowsRotation = false
+            
             addChild(monster)
         }
     }
