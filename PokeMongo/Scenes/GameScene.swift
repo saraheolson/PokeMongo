@@ -14,12 +14,19 @@ class GameScene: SKScene {
     // Define nodes used in the game
     var ball: SKSpriteNode?
 
-    // Defines where user touched
+    // Label for displaying contextual information to the user
+    var titleLabel : SKLabelNode?
+
+    // Holds last touch event locations
     var startTouchLocation: CGPoint = CGPoint.zero
     var endTouchLocation: CGPoint = CGPoint.zero
 
     override func sceneDidLoad() {
         
+        // Get label node from scene and store it for use later
+        self.titleLabel = self.childNode(withName: "//helloLabel") as? SKLabelNode
+        titleLabel?.isHidden = true
+
         // Add a ball to the scene
         if ball == nil {
             createBall()
@@ -104,6 +111,11 @@ class GameScene: SKScene {
         
             // Add to the scene
             addChild(ball)
+            
+            // Display a spark particle when the monster is hit
+            let spark:SKEmitterNode = SKEmitterNode(fileNamed: "MagicParticle")!
+            spark.position = ball.position
+            self.addChild(spark)
         }
     }
     
