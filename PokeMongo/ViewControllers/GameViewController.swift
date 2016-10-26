@@ -16,7 +16,11 @@ class GameViewController: UIViewController {
     @IBOutlet var gameView: SKView!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var backgroundView: UIImageView!
-    
+    @IBOutlet weak var arModeButton: UIButton!
+
+    var isARMode = false
+    var isCameraConfigured = false
+
     private let avCaptureSession: AVCaptureSession = AVCaptureSession()
     
     lazy private var previewLayer: AVCaptureVideoPreviewLayer = { [unowned self] in
@@ -31,34 +35,6 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = UIColor.clear
-        self.backgroundView.isHidden = true
-        
-        // We need to ask the user for permission to use the camera.
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
-        case .authorized:
-            print("Authorized")
-            self.displayCameraView()
-            break
-        case .denied:
-            print("Denied")
-        case .notDetermined:
-            print("Ask for permission")
-            
-            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
-                
-                if granted {
-                    print("Show camera view")
-                    self.displayCameraView()
-                } else {
-                    print("Denied")
-                }
-            }
-        case .restricted:
-            // The MDM profile installed doesn't have access to the camera. Nothing we can do here.
-            print("No camera access")
-        }
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
@@ -90,6 +66,63 @@ class GameViewController: UIViewController {
         }
     }
 
+    // MARK: - Camera permissions
+
+    func askForCameraPermissions() {
+
+        // We need to ask the user for permission to use the camera.
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            print("Authorized")
+            self.displayCameraView()
+            break
+        case .denied:
+            print("Denied")
+        case .notDetermined:
+            print("Ask for permission")
+
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
+
+                if granted {
+                    print("Show camera view")
+                    self.displayCameraView()
+                } else {
+                    print("Denied")
+                }
+            }
+        case .restricted:
+            // The MDM profile installed doesn't have access to the camera. Nothing we can do here.
+            print("No camera access")
+        }
+    }
+
+    // MARK: - Actions
+    @IBAction func tappedARModeButton(_ sender: AnyObject) {
+
+        isARMode = !isARMode
+
+        if isARMode {
+
+            // Ask for permission to use the camera
+            askForCameraPermissions()
+
+            arModeButton.setTitle("Image Mode", for: .normal)
+
+        } else {
+
+            arModeButton.setTitle("AR Mode", for: .normal)
+
+            // Stop the camera session
+            if avCaptureSession.isRunning == true {
+                avCaptureSession.stopRunning()
+            }
+        }
+
+        // Hide/display background and camera view
+        self.backgroundView.isHidden = isARMode
+        self.cameraView.isHidden = !isARMode
+    }
+
     // MARK: Scanning
     func displayCameraView() {
         
@@ -97,10 +130,21 @@ class GameViewController: UIViewController {
             return
         }
         
+        if !isCameraConfigured {
+            configureCameraView()
+        }
+
+        if avCaptureSession.isRunning == false {
+            avCaptureSession.startRunning()
+        }
+    }
+
+    func configureCameraView() {
+
         // configure AV Capture Session
         do {
             let videoCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-            
+
             let videoInput: AVCaptureDeviceInput
             videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
             if avCaptureSession.canAddInput(videoInput) {
@@ -108,23 +152,21 @@ class GameViewController: UIViewController {
             } else {
                 throw AVFoundationError.ConfigurationFailed
             }
-            
+
         } catch {
             debugPrint("Something went wrong")
             debugPrint(error)
             return
         }
-        
+
         previewLayer.frame = cameraView.bounds
         if let videoPreviewView = cameraView {
             videoPreviewView.layer.addSublayer(previewLayer)
         }
-        
-        if avCaptureSession.isRunning == false {
-            avCaptureSession.startRunning()
-        }
+
+        isCameraConfigured = true
     }
-    
+
     override var shouldAutorotate: Bool {
         return true
     }
