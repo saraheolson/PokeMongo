@@ -64,6 +64,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="4Y2-9b-d2H"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qLF-Ox-wOq" userLabel="CameraView">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eK-Hh-PiI" userLabel="GameView" customClass="SKView">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADT-8a-7Es">
@@ -84,14 +87,20 @@
                             <constraint firstAttribute="trailing" secondItem="4Y2-9b-d2H" secondAttribute="trailing" id="4SP-fy-XEf"/>
                             <constraint firstItem="0eK-Hh-PiI" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" id="Gzr-5U-tPK"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="4Y2-9b-d2H" secondAttribute="bottom" id="WfB-os-01w"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="qLF-Ox-wOq" secondAttribute="bottom" id="b4V-H1-gP0"/>
                             <constraint firstAttribute="trailing" secondItem="0eK-Hh-PiI" secondAttribute="trailing" id="joj-Up-pP0"/>
                             <constraint firstItem="4Y2-9b-d2H" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="k5U-Ju-pyQ"/>
+                            <constraint firstItem="qLF-Ox-wOq" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="nCt-im-Nfn"/>
                             <constraint firstItem="0eK-Hh-PiI" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="ovG-Yg-1G4"/>
+                            <constraint firstItem="qLF-Ox-wOq" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" id="px5-Mf-GWN"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="0eK-Hh-PiI" secondAttribute="bottom" id="sy5-XN-Ngc"/>
+                            <constraint firstAttribute="trailing" secondItem="qLF-Ox-wOq" secondAttribute="trailing" id="ysA-Nc-TSS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="55c-wg-LKl"/>
                     <connections>
+                        <outlet property="backgroundView" destination="4Y2-9b-d2H" id="9xf-sE-EZM"/>
+                        <outlet property="cameraView" destination="qLF-Ox-wOq" id="x0D-6h-1z3"/>
                         <outlet property="gameView" destination="0eK-Hh-PiI" id="BIo-Hp-Xos"/>
                     </connections>
                 </viewController>

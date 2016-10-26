@@ -9,13 +9,56 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameViewController: UIViewController {
 
     @IBOutlet var gameView: SKView!
+    @IBOutlet weak var cameraView: UIView!
+    @IBOutlet weak var backgroundView: UIImageView!
     
+    private let avCaptureSession: AVCaptureSession = AVCaptureSession()
+    
+    lazy private var previewLayer: AVCaptureVideoPreviewLayer = { [unowned self] in
+        let previewLayer = AVCaptureVideoPreviewLayer(session: self.avCaptureSession)
+        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        return previewLayer!
+        }()
+    
+    private enum AVFoundationError: Error {
+        case ConfigurationFailed
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.clear
+        self.backgroundView.isHidden = true
+        
+        // We need to ask the user for permission to use the camera.
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized:
+            print("Authorized")
+            self.displayCameraView()
+            break
+        case .denied:
+            print("Denied")
+        case .notDetermined:
+            print("Ask for permission")
+            
+            AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { granted in
+                
+                if granted {
+                    print("Show camera view")
+                    self.displayCameraView()
+                } else {
+                    print("Denied")
+                }
+            }
+        case .restricted:
+            // The MDM profile installed doesn't have access to the camera. Nothing we can do here.
+            print("No camera access")
+        }
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
@@ -47,6 +90,41 @@ class GameViewController: UIViewController {
         }
     }
 
+    // MARK: Scanning
+    func displayCameraView() {
+        
+        guard AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized else {
+            return
+        }
+        
+        // configure AV Capture Session
+        do {
+            let videoCaptureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+            
+            let videoInput: AVCaptureDeviceInput
+            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+            if avCaptureSession.canAddInput(videoInput) {
+                avCaptureSession.addInput(videoInput)
+            } else {
+                throw AVFoundationError.ConfigurationFailed
+            }
+            
+        } catch {
+            debugPrint("Something went wrong")
+            debugPrint(error)
+            return
+        }
+        
+        previewLayer.frame = cameraView.bounds
+        if let videoPreviewView = cameraView {
+            videoPreviewView.layer.addSublayer(previewLayer)
+        }
+        
+        if avCaptureSession.isRunning == false {
+            avCaptureSession.startRunning()
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }
