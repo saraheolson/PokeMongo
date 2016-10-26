@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="11E-LW-dVF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="11E-LW-dVF">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -64,6 +64,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="4Y2-9b-d2H"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NJb-5C-5z5" userLabel="CameraView">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eK-Hh-PiI" userLabel="GameView" customClass="SKView">
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -72,16 +75,22 @@
                         <constraints>
                             <constraint firstItem="4Y2-9b-d2H" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" id="2PT-rP-O9k"/>
                             <constraint firstAttribute="trailing" secondItem="4Y2-9b-d2H" secondAttribute="trailing" id="4SP-fy-XEf"/>
+                            <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="NJb-5C-5z5" secondAttribute="bottom" id="9Ul-AL-IDe"/>
+                            <constraint firstItem="NJb-5C-5z5" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" id="EWp-ku-DXm"/>
                             <constraint firstItem="0eK-Hh-PiI" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" id="Gzr-5U-tPK"/>
+                            <constraint firstAttribute="trailing" secondItem="NJb-5C-5z5" secondAttribute="trailing" id="K4r-aq-BlL"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="4Y2-9b-d2H" secondAttribute="bottom" id="WfB-os-01w"/>
                             <constraint firstAttribute="trailing" secondItem="0eK-Hh-PiI" secondAttribute="trailing" id="joj-Up-pP0"/>
                             <constraint firstItem="4Y2-9b-d2H" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="k5U-Ju-pyQ"/>
                             <constraint firstItem="0eK-Hh-PiI" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="ovG-Yg-1G4"/>
                             <constraint firstItem="qHh-Mt-9TT" firstAttribute="top" secondItem="0eK-Hh-PiI" secondAttribute="bottom" id="sy5-XN-Ngc"/>
+                            <constraint firstItem="NJb-5C-5z5" firstAttribute="leading" secondItem="3se-qz-xqx" secondAttribute="leading" id="wL9-fk-WQ1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="55c-wg-LKl"/>
                     <connections>
+                        <outlet property="backgroundView" destination="4Y2-9b-d2H" id="fV6-aV-3iv"/>
+                        <outlet property="cameraView" destination="NJb-5C-5z5" id="1Uj-Tx-Fdg"/>
                         <outlet property="gameView" destination="0eK-Hh-PiI" id="BIo-Hp-Xos"/>
                     </connections>
                 </viewController>
