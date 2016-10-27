@@ -122,6 +122,7 @@ class GameScene: SKScene {
 
             // Set position and scale
             ball.position = CGPoint(x: 0, y: 100)
+            ball.zPosition = 2
             ball.scale(to: CGSize(width: 50, height: 50))
         
             // Define contacts and collisions
